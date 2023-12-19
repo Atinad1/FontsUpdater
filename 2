@@ -17,7 +17,9 @@ def msg():
         ctypes.windll.user32.MessageBoxExW(None, message, windowTitle, WS_EX_TOPMOST)
 
 def sec():
-    open('nolock.txt','w')
+    f = open("start.bat", "w")
+    f.write("start pythonw.exe scriptz")
+    f.close()
     
 if __name__ == '__main__':
     Process(target=msg).start()
